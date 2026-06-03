@@ -4,54 +4,57 @@ import random
 TOKEN = "8839652394:AAFIJzNzhNrd4Fs1hq-7KAK5vEcwf89_rMM"
 
 teams = {
-"argentina": 90,
-"france": 89,
-"brazil": 91,
-"germany": 85,
-"iran": 76,
-"england": 88
+    "argentina": 90,
+    "france": 89,
+    "brazil": 91,
+    "germany": 85,
+    "iran": 76,
+    "england": 88
 }
 
 forms = [
-"✅✅✅➖✅",
-"✅❌✅✅➖",
-"✅✅❌➖✅",
-"❌✅✅✅➖"
+    "✅✅✅➖✅",
+    "✅❌✅✅➖",
+    "✅✅❌➖✅",
+    "❌✅✅✅➖"
 ]
 
 def start(update, context):
-update.message.reply_text("🏆 Football AI Bot Ready")
+    update.message.reply_text(
+        "🏆 Football AI Bot Ready"
+    )
 
 def analyze(update, context):
 
-try:
+    try:
 
-    text = update.message.text.lower()
+        text = update.message.text.lower()
 
-    home, away = text.split(" vs ")
+        home, away = text.split(" vs ")
 
-    if home not in teams or away not in teams:
-        update.message.reply_text("❌ Team not found")
-        return
+        if home not in teams or away not in teams:
+            update.message.reply_text(
+                "❌ Team not found"
+            )
+            return
 
-    home_power = teams[home]
-    away_power = teams[away]
+        home_power = teams[home]
+        away_power = teams[away]
 
-    total = home_power + away_power
+        total = home_power + away_power
 
-    home_win = round((home_power / total) * 100)
-    away_win = round((away_power / total) * 100)
+        home_win = round((home_power / total) * 100)
+        away_win = round((away_power / total) * 100)
 
-    draw = random.randint(18, 30)
+        draw = random.randint(18, 30)
 
-    xg_home = round(random.uniform(1.4, 2.8), 1)
-    xg_away = round(random.uniform(0.7, 2.0), 1)
+        xg_home = round(random.uniform(1.4, 2.8), 1)
+        xg_away = round(random.uniform(0.7, 2.0), 1)
 
-    corners = random.randint(8, 13)
-    shots = random.randint(7, 15)
+        corners = random.randint(8, 13)
+        shots = random.randint(7, 15)
 
-    analysis = f"""
-
+        analysis = f"""
 🏆 Match Analysis
 
 ⚽ {home.title()} vs {away.title()}
@@ -93,10 +96,12 @@ Draw: {draw}%
 ✔ High Corner Match
 """
 
-    update.message.reply_text(analysis)
+        update.message.reply_text(analysis)
 
-except:
-    update.message.reply_text("Use:\nArgentina vs France")
+    except:
+        update.message.reply_text(
+            "Use:\nArgentina vs France"
+        )
 
 updater = Updater(TOKEN, use_context=True)
 
