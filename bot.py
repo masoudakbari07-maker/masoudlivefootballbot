@@ -1,7 +1,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import random
 
-TOKEN =8839652394:AAFIJzNzhNrd4Fs1hq-7KAK5vEcwf89_rMM
+TOKEN = "8839652394:AAFIJzNzhNrd4Fs1hq-7KAK5vEcwf89_rMM"
 
 teams = {
 "argentina": 90,
