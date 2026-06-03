@@ -1,4 +1,12 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram import Update
+from telegram.ext import (
+    ApplicationBuilder,
+    CommandHandler,
+    MessageHandler,
+    ContextTypes,
+    filters,
+)
+
 import random
 
 TOKEN = "8839652394:AAFIJzNzhNrd4Fs1hq-7KAK5vEcwf89_rMM"
@@ -19,12 +27,12 @@ forms = [
     "❌✅✅✅➖"
 ]
 
-def start(update, context):
-    update.message.reply_text(
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
         "🏆 Football AI Bot Ready"
     )
 
-def analyze(update, context):
+async def analyze(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
 
@@ -33,7 +41,7 @@ def analyze(update, context):
         home, away = text.split(" vs ")
 
         if home not in teams or away not in teams:
-            update.message.reply_text(
+            await update.message.reply_text(
                 "❌ Team not found"
             )
             return
@@ -96,21 +104,18 @@ Draw: {draw}%
 ✔ High Corner Match
 """
 
-        update.message.reply_text(analysis)
+        await update.message.reply_text(analysis)
 
     except:
-        update.message.reply_text(
+        await update.message.reply_text(
             "Use:\nArgentina vs France"
         )
 
-updater = Updater(TOKEN, use_context=True)
+app = ApplicationBuilder().token(TOKEN).build()
 
-dp = updater.dispatcher
-
-dp.add_handler(CommandHandler("start", start))
-dp.add_handler(MessageHandler(Filters.text, analyze))
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(filters.TEXT, analyze))
 
 print("BOT RUNNING ⚽")
 
-updater.start_polling()
-updater.idle()
+app.run_polling()
